@@ -1,0 +1,12 @@
+Log created: 2022-11-10T19:43:28.598963000Z
+Process ID:  10411 (0x28ab)
+Parent PID:  1730 (0x6c2)
+Executable:  /usr/lib/virtualbox/VBoxHeadless
+Arg[0]: /usr/lib/virtualbox/VBoxHeadless
+Arg[1]: --comment
+Arg[2]: crud_web-1_1667762106694_46580
+Arg[3]: --startvm
+Arg[4]: 9c2e4e0b-a4df-47cf-95b6-e98493322f20
+Arg[5]: --vrde
+Arg[6]: config
+AddRef: illegal refcnt=3221225469 state=2

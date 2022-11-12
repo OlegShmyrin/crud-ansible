@@ -6,3 +6,31 @@
     apt:
       name: apache2
       state: present
+  - name: Install software properties common
+    apt: name=software-properties-common
+  - name: Add PHP repo
+    apt_repository: repo=ppa:ondrej/php
+  - name: Update repo
+    apt: update_cache=yes
+  - name: apt install php
+    apt:
+      name: php7.2
+      state: present
+      update_cache: true
+  #- name: apt install libapache2-mod-php
+  #  apt:
+  #    name: libapache2-mod-php
+  #    state: present
+  - name: Apache Status check
+    service:
+      name: apache2
+      state: started
+  - name: Copy html
+    copy: 
+      src: '{{item}}'
+      dest: /var/www/html/
+      owner: www-data
+      mode: 0744
+    loop:
+     - ./html/index.html
+     - ./html/myphpinfo.php
