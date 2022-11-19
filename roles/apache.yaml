@@ -24,16 +24,16 @@
       name: apache2
       state: started
 
-  # ## Apache and PHP testing
-  # - name: Copy html
-  #   copy: 
-  #     src: '{{ item }}'
-  #     dest: /var/www/html/
-  #     owner: www-data
-  #     mode: 0744
-  #   loop:
-  #    - files/index.html
-  #    - files/myphpinfo.php
+  ## Apache and PHP testing
+  - name: Copy html
+    copy: 
+      src: '{{ item }}'
+      dest: /var/www/html/
+      owner: www-data
+      mode: 0744
+    loop:
+     - files/index.html
+     - files/myphpinfo.php
 
   - name: Clone a repo with separate git directory
     become: true
