@@ -1,3 +1,11 @@
+BOX_URL = "https://oracle.github.io/vagrant-projects/boxes"
+#BOX_NAME = "oraclelinux/9-btrfs"
+BOX_NAME = "ubuntu/focal64"
+$provision_script = <<PROVISION
+    yum -y update
+    yum install ifupdown -y
+PROVISION
+
 Vagrant.configure("2") do |config|
 
     (1..2).each do |i|
@@ -27,7 +35,9 @@ Vagrant.configure("2") do |config|
         end
     end
     config.vm.define "db-mysql-1" do |conf|
-            conf.vm.box = "ubuntu/focal64"
+            # conf.vm.provision "shell", inline: $provision_script
+            conf.vm.box = "#{BOX_NAME}"
+            #config.vm.box_url = "#{BOX_URL}/#{BOX_NAME}.json"
             conf.vm.hostname = "db-mysql-1"
             #conf.vm.network "private_network", type: "dhcp"
             conf.vm.network "public_network", ip: "192.168.1.110", netmask: "255.255.255.0", virtualbox_intnet: "net-1", bridge: "wlp2s0" 
@@ -44,8 +54,8 @@ Vagrant.configure("2") do |config|
             end
             conf.vm.provider "virtualbox" do |vb|
                 vb.gui = false
-                vb.memory = 512
-                vb.cpus = 1
+                vb.memory = 512*5
+                vb.cpus = 2
             end
             
         end

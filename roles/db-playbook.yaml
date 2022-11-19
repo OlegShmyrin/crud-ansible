@@ -1,0 +1,52 @@
+---
+- name: Install Pre-Req
+  hosts: dbsrv
+  become: true
+
+  tasks:
+    - name: Install Python3
+      apt:
+        name: python3
+        state: present
+      
+- name: Management tools and MySQL install
+  hosts: dbsrv
+  vars: 
+    - ansible_python_interpreter: /usr/bin/python3
+    - password: password123
+  tasks:      
+      - name: Python mysql connector
+        become: true
+        apt:
+          name: 
+            - python3-pymysql
+            - mysql-server
+            - mysql-client
+          state: present
+      - name: MySQL service check
+        become: true
+        service:
+          name: mysql.service
+          state: started
+          enabled: true
+      - name: Set root password mysql
+        become: true
+        mysql_user:
+          login_user: root
+          login_password: "{{ password }}"
+          check_implicit_admin: true
+          user: root
+      - name: Copy sql script
+        copy:
+          src: ./src/script.sql
+          dest: /vagrant/script.sql
+      - name: Import SQL script
+        mysql_db:
+          login_user: root
+          login_password: "{{ password }}"
+          state: import
+          target: /vagrant/script.sql   
+        
+        
+
+

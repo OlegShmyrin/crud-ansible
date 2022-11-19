@@ -1,0 +1,19 @@
+---
+app:
+  hosts:
+    web-1: 
+      ansible_user: vagrant 
+      ansible_host: 192.168.1.101
+      ansible_ssh_private_key_file: "{{ ssh_private_key_file_path }}"
+
+    web-2:
+      ansible_user: vagrant 
+      ansible_host: 192.168.1.102
+      ansible_ssh_private_key_file: "{{ ssh_private_key_file_path }}"
+
+dbsrv:
+  hosts:
+    db-mysql-1:
+      ansible_user: vagrant 
+      ansible_host: 192.168.1.110 
+      ansible_ssh_private_key_file: "{{ ssh_private_key_file_path }}"

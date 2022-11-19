@@ -1,0 +1,8 @@
+---
+- hosts: app
+  vars_files: 
+    - vars/variables.yaml
+  become: true
+  tasks:
+    - name: Install apache 
+      import_tasks: roles/apache.yaml  
