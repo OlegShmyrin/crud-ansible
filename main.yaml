@@ -1,17 +1,15 @@
 ---
-# - hosts: app
-#   vars_files: 
-#     - vars/variables.yaml
-#   become: true
-#   tasks:
-#     - name: Install apache 
-#       import_tasks: roles/apache.yaml  
-    
+- hosts: app
+  vars_files: 
+    - vars/variables.yaml
+  become: true
+  tasks:
+    - name: Install apache 
+      import_tasks: roles/apache.yaml  
 - hosts: dbsrv
   vars_files:
     - vars/variables.yaml
   become: true
   tasks: 
     - name: Install MySQL
-      import_tasks: roles/mysql.yaml
-        
+      import_tasks: roles/mysql.yaml        
