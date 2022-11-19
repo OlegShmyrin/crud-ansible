@@ -1,0 +1,39 @@
+  - name: Install Python3
+    apt:
+      name: python3
+      state: present
+      
+  - name: Management tools and MySQL install
+    become: true
+    apt:
+      name: 
+        - python3-pymysql
+        - mysql-server
+        - mysql-client
+      state: present
+  - name: MySQL service check
+    become: true
+    service:
+        name: mysql.service
+        state: started
+        enabled: true
+  - name: Set root password mysql
+    become: true
+    mysql_user:
+      login_user: root
+      login_password: "{{ db_root_password }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+      check_implicit_admin: true
+      user: root
+  # - name: Copy sql script
+  #   copy:
+  #     src: files/script.sql
+  #     dest: /home/vagrant/script.sql
+  - name: Import SQL script
+    mysql_db:
+      login_user: root
+      login_password: "{{ db_root_password }}"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+      state: import
+      name: all
+      target: /vagrant/files/script.sql

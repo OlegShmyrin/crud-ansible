@@ -1,2 +1,4 @@
 ---
 ssh_private_key_file_path: /home/oleg/.ssh/id_rsa_no_pass
+db_root_password: password123
+ansible_python_interpreter: /usr/bin/python3
