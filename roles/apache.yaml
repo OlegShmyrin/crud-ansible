@@ -15,7 +15,9 @@
 
   - name: apt install php
     apt:
-      name: php7.2
+      name: 
+        - php7.2
+        - php7.2-mysql
       state: present
       update_cache: true
 
@@ -34,6 +36,18 @@
     loop:
      - files/index.html
      - files/myphpinfo.php
+  
+  - name: PHP Mysqli enable
+    lineinfile:
+      path: /etc/php/7.2/apache2/php.ini
+      regexp: '^extension=mysqli'
+      line: extension=mysqli
+  
+  - name: Reload apache2
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: apache2
 
   - name: Clone a repo with separate git directory
     become: true
