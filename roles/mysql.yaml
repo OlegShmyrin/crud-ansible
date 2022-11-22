@@ -59,7 +59,7 @@
     mysql_user:
       name: "{{ crud_db_user }}"
       password: "{{ crud_db_user_password }}"
-      priv: "{{ crud_db_name }}".*:All
+      #priv: '"{{ crud_db_name}}".*:All"'
       host: "{{ item }}"
     with_items:
       - "192.168.1.101"

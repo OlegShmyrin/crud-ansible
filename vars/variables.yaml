@@ -2,8 +2,10 @@
 ssh_private_key_file_path: /home/oleg/.ssh/id_rsa_no_pass
 ansible_python_interpreter: /usr/bin/python3
 # Mysql root
+db_host: 192.168.10.110
 db_root_password: password123
 # Mysql user
 crud_db_name: php_mysql_crud
 crud_db_user: crud_user
 crud_db_user_password: password234
+connection_string: $conn = mysqli_connect("192.168.10.110","crud_user","password234","php_mysql_crud")

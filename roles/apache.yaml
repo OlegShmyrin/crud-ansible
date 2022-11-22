@@ -49,6 +49,11 @@
       daemon_reload: yes
       name: apache2
 
+  # - name: Delete html dir in Apache
+  #   file:
+  #     path: /var/www/html/
+  #     state: "absent"
+
   - name: Clone a repo with separate git directory
     become: true
     git:
@@ -68,13 +73,13 @@
   - name: Change connection string in db.php
     lineinfile:
       path: /var/www/html/db.php
-        regexp: '{{item.From}}'
+      regexp: '"DB_HOST","DB_USER","DB_PASSWORD","DB_DATABASE"'
         # Line to Replace with
-        line: '{{item.To}}'
-        state: present  
-        # To validate the Changes Before Committing/Saving
-      with_items:
-      - { From: 'define("DB_HOST", "db-hostname");', To: 'define("DB_HOST", ""{{ db_host }}"");'}
-      - { From: 'define("DB_USER", "root");', To: 'define("DB_USER", ""{{ crud_db_user }}"");'}
-      - { From: 'define("DB_PASSWORD", "password123");', To: 'define("DB_PASSWORD", "{{ crud_db_user_password }}");'}
-      - { From: 'define("DB_DATABASE", "php_mysql_crud");', To: 'define("DB_DATABASE", "{{ crud_db_name }}");'}
+      line: "{{ connection_string }}"
+      state: present  
+    # with_items:  
+    #     - {From: "DB_HOST", To: "{{ db_host }}"}
+    #     - {From: "DB_USER", To:  "{{ crud_db_user }}"}
+    #     - {From: DB_PASSWORD, To:  "{{ crud_db_user_password }}"}
+    #     - {From: DB_DATABASE, To:  "{{ crud_db_name }}"}
+     
