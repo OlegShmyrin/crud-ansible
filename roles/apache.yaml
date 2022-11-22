@@ -64,3 +64,17 @@
       remote_src: yes
       owner: www-data
       mode: 0744
+  
+  - name: Change connection string in db.php
+    lineinfile:
+      path: /var/www/html/db.php
+        regexp: '{{item.From}}'
+        # Line to Replace with
+        line: '{{item.To}}'
+        state: present  
+        # To validate the Changes Before Committing/Saving
+      with_items:
+      - { From: 'define("DB_HOST", "db-hostname");', To: 'define("DB_HOST", ""{{ db_host }}"");'}
+      - { From: 'define("DB_USER", "root");', To: 'define("DB_USER", ""{{ crud_db_user }}"");'}
+      - { From: 'define("DB_PASSWORD", "password123");', To: 'define("DB_PASSWORD", "{{ crud_db_user_password }}");'}
+      - { From: 'define("DB_DATABASE", "php_mysql_crud");', To: 'define("DB_DATABASE", "{{ crud_db_name }}");'}
