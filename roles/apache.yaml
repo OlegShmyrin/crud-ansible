@@ -16,8 +16,8 @@
   - name: apt install php
     apt:
       name: 
-        - php7.2
-        - php7.2-mysql
+        - php7.4
+        - php7.4-mysql
       state: present
       update_cache: true
 
@@ -39,7 +39,7 @@
   
   - name: PHP Mysqli enable
     lineinfile:
-      path: /etc/php/7.2/apache2/php.ini
+      path: /etc/php/7.4/apache2/php.ini
       regexp: '^extension=mysqli'
       line: extension=mysqli
   

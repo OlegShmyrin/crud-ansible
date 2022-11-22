@@ -25,10 +25,25 @@
       login_unix_socket: /var/run/mysqld/mysqld.sock
       check_implicit_admin: true
       user: root
-  # - name: Copy sql script
-  #   copy:
-  #     src: files/script.sql
-  #     dest: /home/vagrant/script.sql
+      host: "{{ item }}"
+    with_items:
+      - localhost
+      - 127.0.0.1
+      - "192.168.1.101"
+      - "192.168.1.102"
+    
+  - name: Mysql bind address
+    lineinfile:
+      path: /etc/mysql/mysql.conf.d/mysqld.cnf
+      regexp: '^bind-address'
+      line: bind-address=127.0.0.1,192.168.1.110
+
+  - name: Restart Mysql
+    systemd:
+      state: restarted
+      daemon_reload: yes
+      name: mysql
+
   - name: Import SQL script
     mysql_db:
       login_user: root
