@@ -53,3 +53,14 @@
       name: "{{ crud_db_name }}"
       target: /vagrant/files/script.sql
       state: present
+  
+  - name: Create mysql user for app
+    become: true
+    mysql_user:
+      name: "{{ crud_db_user }}"
+      password: "{{ crud_db_user_password }}"
+      priv: "{{ crud_db_name }}".*:All
+      host: "{{ item }}"
+    with_items:
+      - "192.168.1.101"
+      - "192.168.1.102"
